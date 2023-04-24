@@ -1,15 +1,30 @@
 import React, { useState } from "react";
-import axios, { all } from "axios";
+import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 const API_URL = "http://localhost:3001/auth";
 
 export const Auth = () => {
+  const [mode, setMode] = useState("login");
+
+  const handleModeSwitch = () => {
+    setMode("register");
+  };
+
   return (
     <div className="auth">
-      <Login />
-      <Register />
+      {mode === "login" ? (
+        <>
+          <Login />
+          <button onClick={handleModeSwitch}>Register</button>
+        </>
+      ) : (
+        <>
+          <Register />
+          <button onClick={() => setMode("login")}>Login</button>
+        </>
+      )}
     </div>
   );
 };
@@ -39,33 +54,19 @@ const Login = () => {
   };
 
   return (
-    <div className="auth-container">
-      <form onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
+    <Form
+      username={username}
+      setUsername={setUsername}
+      password={password}
+      setPassword={setPassword}
+      handleSubmit={handleSubmit}
+      // message={message}
+      label="Login"
+    />
   );
 };
-const Register = ({ setCookies }) => {
+
+const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -85,11 +86,32 @@ const Register = ({ setCookies }) => {
       console.error(error);
     }
   };
+  return (
+    <Form
+      username={username}
+      setUsername={setUsername}
+      password={password}
+      setPassword={setPassword}
+      handleSubmit={handleSubmit}
+      label="Register"
+      message={message}
+    />
+  );
+};
 
+const Form = ({
+  username,
+  setUsername,
+  password,
+  setPassword,
+  handleSubmit,
+  label,
+  message,
+}) => {
   return (
     <div className="auth-container">
       <form onSubmit={handleSubmit}>
-        <h2>Register</h2>
+        <h2>{label}</h2>
         <div className="form-group">
           <label htmlFor="username">Username:</label>
           <input
@@ -109,7 +131,7 @@ const Register = ({ setCookies }) => {
           />
         </div>
         {message && <div>{message}</div>}
-        <button type="submit">Register</button>
+        <button type="submit">{label}</button>
       </form>
     </div>
   );
