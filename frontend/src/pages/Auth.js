@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { all } from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+
+const API_URL = "http://localhost:3001/auth";
 
 export const Auth = () => {
   return (
@@ -13,7 +15,7 @@ export const Auth = () => {
 };
 
 const Login = () => {
-  const [_, setCookies] = useCookies(["access_token"]);
+  const [, setCookies] = useCookies(["access_token"]);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,11 +26,10 @@ const Login = () => {
     event.preventDefault();
 
     try {
-      const result = await axios.post("http://localhost:3001/auth/login", {
+      const result = await axios.post(`${API_URL}/login`, {
         username,
         password,
       });
-
       setCookies("access_token", result.data.token);
       window.localStorage.setItem("userID", result.data.userID);
       navigate("/");
@@ -64,22 +65,22 @@ const Login = () => {
     </div>
   );
 };
-
-const Register = () => {
+const Register = ({ setCookies }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  const [_, setCookies] = useCookies(["access_token"]);
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
-      await axios.post("http://localhost:3001/auth/register", {
+      await axios.post(`${API_URL}/register`, {
         username,
         password,
       });
-      alert("Registration Completed! Now login.");
+
+      setMessage("Registration Completed! Now login.");
     } catch (error) {
       console.error(error);
     }
@@ -107,6 +108,7 @@ const Register = () => {
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
+        {message && <div>{message}</div>}
         <button type="submit">Register</button>
       </form>
     </div>

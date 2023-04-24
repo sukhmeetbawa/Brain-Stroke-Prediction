@@ -13,7 +13,7 @@ router.post("/register", async (req, res) => {
   });
 
   if (user) {
-    return res.json({ message: "User already exists!" });
+    return res.status(401).json({ message: "User already exists!" });
   }
   const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -28,11 +28,11 @@ router.post("/login", async (req, res) => {
     username: username,
   });
   if (!user) {
-    return res.json({ message: "User not found!" });
+    return res.status(401).json({ message: "User not found!" });
   }
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    return res.json({ message: "Invalid Username or Password!" });
+    return res.status(401).json({ message: "Invalid Username or Password!" });
   }
 
   const token = jwt.sign({ id: user._id }, "secret");
