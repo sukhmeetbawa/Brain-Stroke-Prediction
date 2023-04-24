@@ -90,9 +90,23 @@ export const NavBar = () => {
 
         {/* Login/Logout button is always visible at the end */}
         {!cookies.access_token ? (
-          <Button component={Link} to={"/auth"} color="inherit">
-            Login/Register
-          </Button>
+          isSmallScreen ? (
+            <div style={{ marginLeft: "auto" }}>
+              <Button component={Link} to={"/auth"} color="inherit">
+                Login/Register
+              </Button>
+            </div>
+          ) : (
+            <Button component={Link} to={"/auth"} color="inherit">
+              Login/Register
+            </Button>
+          )
+        ) : isSmallScreen ? (
+          <div style={{ marginLeft: "auto" }}>
+            <Button onClick={logout} color="inherit">
+              Logout
+            </Button>
+          </div>
         ) : (
           <Button onClick={logout} color="inherit">
             Logout
