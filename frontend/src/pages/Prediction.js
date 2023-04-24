@@ -13,11 +13,9 @@ import {
   Box,
   Grid,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
 
 function Prediction() {
   //Using useState to set incoming variable from Python backend
-  const [data, setdata] = useState([{}]);
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [glucose, setGlucose] = useState("");

@@ -4,7 +4,6 @@ import { Container, Grid, Typography, Box, Divider } from "@material-ui/core";
 import Smoke from "../images/smoke.png";
 import Bmi from "../images/BMI.png";
 import Glucose from "../images/glucose.png";
-import Hypertension from "../images/Hypertension.png";
 import Age from "../images/age.png";
 
 const useStyles = makeStyles((theme) => ({
