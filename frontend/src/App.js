@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Prediction from "./pages/Prediction";
 import { Auth } from "./pages/Auth";
 import { NavBar } from "./components/NavBar";
-import { About } from "./pages/About";
+import About from "./pages/About";
 import { Credits } from "./pages/Credits";
 
 function App() {

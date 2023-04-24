@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
@@ -12,17 +13,12 @@ import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, useTheme } from "@material-ui/core/styles";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-    [theme.breakpoints.up("md")]: {
-      display: "none",
-    },
   },
 }));
 
@@ -30,9 +26,13 @@ export const NavBar = () => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const navigate = useNavigate();
   const classes = useStyles();
+  const theme = useTheme();
 
   // State to manage drawer state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  // Use media query to detect screen size
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -60,30 +60,33 @@ export const NavBar = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        {/* The menu button is only visible in mobile devices */}
-        <IconButton
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-          onClick={toggleDrawer(true)}
-        >
-          <MenuIcon />
-        </IconButton>
+        {/* The menu button is only visible in small screens */}
+        {isSmallScreen && (
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+        )}
 
-        {/* Navigation links are always visible, but hidden in mobile devices when the drawer is open */}
-        <div style={{ display: "flex", flexGrow: 1 }}>
-          {navLinks.map((link) => (
-            <Button
-              key={link.path}
-              component={Link}
-              to={link.path}
-              color="inherit"
-            >
-              {link.name}
-            </Button>
-          ))}
-        </div>
+        {/* Navigation links are always visible, but hidden in small screens when the drawer is open */}
+        {!isSmallScreen && (
+          <div style={{ display: "flex", flexGrow: 1 }}>
+            {navLinks.map((link) => (
+              <Button
+                key={link.path}
+                component={Link}
+                to={link.path}
+                color="inherit"
+              >
+                {link.name}
+              </Button>
+            ))}
+          </div>
+        )}
 
         {/* Login/Logout button is always visible at the end */}
         {!cookies.access_token ? (
@@ -96,10 +99,10 @@ export const NavBar = () => {
           </Button>
         )}
 
-        {/* Drawer for mobile devices */}
+        {/* Drawer for small screens */}
         <SwipeableDrawer
           anchor="left"
-          open={isDrawerOpen}
+          open={isSmallScreen && isDrawerOpen}
           onClose={toggleDrawer(false)}
           onOpen={toggleDrawer(true)}
         >
