@@ -2,39 +2,57 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import {
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Box,
+  makeStyles,
+} from "@material-ui/core";
+const useStyles = makeStyles((theme) => ({
+  authContainer: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: "100vh",
+  },
+  form: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: theme.spacing(2),
+  },
+  formGroup: {
+    marginBottom: theme.spacing(2),
+  },
+}));
 
-const API_URL = "http://localhost:3001/auth";
-
-export const Auth = () => {
+const Auth = () => {
   const [mode, setMode] = useState("login");
-
-  const handleModeSwitch = () => {
-    setMode("register");
-  };
+  const API_URL = "http://localhost:3001/auth";
 
   return (
-    <div className="auth">
+    <>
       {mode === "login" ? (
         <>
-          <Login />
-          <button onClick={handleModeSwitch}>Register</button>
+          <Login API_URL={API_URL} setMode={setMode} />
         </>
       ) : (
         <>
-          <Register />
-          <button onClick={() => setMode("login")}>Login</button>
+          <Register API_URL={API_URL} setMode={setMode} />
         </>
       )}
-    </div>
+    </>
   );
 };
 
-const Login = () => {
+const Login = ({ API_URL, setMode }) => {
   const [, setCookies] = useCookies(["access_token"]);
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -46,7 +64,7 @@ const Login = () => {
         password,
       });
       setCookies("access_token", result.data.token);
-      window.localStorage.setItem("userID", result.data.userID);
+      localStorage.setItem("userID", result.data.userID);
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -60,32 +78,30 @@ const Login = () => {
       password={password}
       setPassword={setPassword}
       handleSubmit={handleSubmit}
-      // message={message}
       label="Login"
+      toggleLabel="Register"
+      onToggleClick={() => setMode("register")}
     />
   );
 };
 
-const Register = () => {
+const Register = ({ API_URL, setMode }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      await axios.post(`${API_URL}/register`, {
-        username,
-        password,
-      });
-
+      await axios.post(`${API_URL}/register`, { username, password });
       setMessage("Registration Completed! Now login.");
     } catch (error) {
       console.error(error);
     }
   };
+
   return (
     <Form
       username={username}
@@ -95,6 +111,8 @@ const Register = () => {
       handleSubmit={handleSubmit}
       label="Register"
       message={message}
+      toggleLabel="Login"
+      onToggleClick={() => setMode("login")}
     />
   );
 };
@@ -107,32 +125,54 @@ const Form = ({
   handleSubmit,
   label,
   message,
+  toggleLabel,
+  onToggleClick,
 }) => {
+  const classes = useStyles();
+
   return (
-    <div className="auth-container">
-      <form onSubmit={handleSubmit}>
-        <h2>{label}</h2>
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(event) => setUsername(event.target.value)}
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-          />
-        </div>
-        {message && <div>{message}</div>}
-        <button type="submit">{label}</button>
-      </form>
-    </div>
+    <Container maxWidth="xs">
+      <Box className={classes.authContainer}>
+        <Typography component="h2" variant="h4">
+          {label}
+        </Typography>
+        <form onSubmit={handleSubmit} className={classes.form}>
+          <div className={classes.formGroup}>
+            <TextField
+              id="username"
+              label="Username"
+              variant="outlined"
+              value={username}
+              onChange={({ target }) => setUsername(target.value)}
+            />
+          </div>
+          <div className={classes.formGroup}>
+            <TextField
+              id="password"
+              label="Password"
+              variant="outlined"
+              type="password"
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+            />
+          </div>
+          {message && (
+            <Typography color="error" gutterBottom>
+              {message}
+            </Typography>
+          )}
+          <Button type="submit" variant="contained" color="primary">
+            {label}
+          </Button>
+          {toggleLabel && (
+            <Button color="primary" onClick={onToggleClick}>
+              {toggleLabel}
+            </Button>
+          )}
+        </form>
+      </Box>
+    </Container>
   );
 };
+
+export default Auth;
