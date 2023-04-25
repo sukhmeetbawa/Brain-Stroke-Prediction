@@ -1,10 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Container, Grid, Typography, Box, Divider } from "@material-ui/core";
-import Smoke from "../images/smoke.png";
-import Bmi from "../images/BMI.png";
-import Glucose from "../images/glucose.png";
-import Age from "../images/age.png";
+import DonutChart from "../components/Chart";
 
 const useStyles = makeStyles((theme) => ({
   aboutPage: {
@@ -64,7 +61,7 @@ const About = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Box className={classes.aboutContainer}>
-                <img src={Bmi} alt="BMI" className={classes.causeImage} />
+                <DonutChart series={[15.3, 84.7]} labels={["Fit", "Obese"]} />
                 <Typography variant="h5">BMI</Typography>
                 <Typography variant="body1">
                   Obesity increases risk for stroke by several distinct
@@ -78,7 +75,10 @@ const About = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Box className={classes.aboutContainer}>
-                <img src={Age} alt="Age" className={classes.causeImage} />
+                <DonutChart
+                  series={[28.9, 71.1]}
+                  labels={["Adult", "Elderly"]}
+                />
                 <Typography variant="h5">AGE</Typography>
                 <Typography variant="body1">
                   The older you are, the more likely you are to have a stroke.
@@ -90,7 +90,10 @@ const About = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Box className={classes.aboutContainer}>
-                <img src={Smoke} alt="Smoking" className={classes.causeImage} />
+                <DonutChart
+                  series={[36.1, 63.9]}
+                  labels={["Non Smoker", "Active Smoker"]}
+                />
                 <Typography variant="h5">SMOKING</Typography>
                 <Typography variant="body1">
                   Smoking is a major cause of cardiovascular disease (CVD) and
@@ -102,10 +105,9 @@ const About = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Box className={classes.aboutContainer}>
-                <img
-                  src={Glucose}
-                  alt="Diabetes"
-                  className={classes.causeImage}
+                <DonutChart
+                  series={[40.2, 15.3, 44.6]}
+                  labels={["Diabetic", "Pre Diabetic", "Non Diabetic"]}
                 />
                 <Typography variant="h5">DIABETES</Typography>
                 <Typography variant="body1">

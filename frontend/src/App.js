@@ -5,6 +5,7 @@ import { NavBar } from "./components/NavBar";
 import About from "./pages/About";
 import Credits from "./pages/Credits";
 
+import "./App.css";
 function App() {
   return (
     <div className="App">
