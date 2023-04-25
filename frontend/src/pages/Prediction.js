@@ -15,6 +15,7 @@ import {
   Grid,
   makeStyles,
 } from "@material-ui/core";
+import MessageComponent from "../components/Message";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -46,6 +47,9 @@ function Prediction() {
 
   const cookies = new Cookies();
   const cookie = cookies.get("access_token");
+
+  const [message, setMessage] = useState(null);
+  const [severity, setSeverity] = useState("info");
 
   if (!cookie) {
     return (
@@ -94,11 +98,11 @@ function Prediction() {
         });
 
         if (parsedObj === "No stroke") {
-          alert("Congratulations! Your chances of a stroke are low.");
+          setMessage("Congratulations! Your chances of a stroke are low.");
+          setSeverity("success");
         } else {
-          alert(
-            "Your chances of getting a stroke are high, please consult a doctor!"
-          );
+          setMessage("Ohh No! Your chances of getting a stroke are high");
+          setSeverity("error");
         }
       });
   };
@@ -106,6 +110,7 @@ function Prediction() {
   return (
     <Container maxWidth="xs">
       <Box>
+        {message && <MessageComponent message={message} severity={severity} />}
         <Typography
           component="h2"
           variant="h2"

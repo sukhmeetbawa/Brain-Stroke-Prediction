@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.secondary.main, // Set your desired background color
     borderRadius: theme.spacing(1), // Add border radius to achieve rounded corners
+    marginBottom: theme.spacing(2), // Add margin to the bottom
   },
   title: {
     flexGrow: 1,

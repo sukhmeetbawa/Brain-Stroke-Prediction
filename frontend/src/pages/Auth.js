@@ -10,6 +10,9 @@ import {
   Box,
   makeStyles,
 } from "@material-ui/core";
+
+import MessageComponent from "../components/Message";
+
 const useStyles = makeStyles((theme) => ({
   authContainer: {
     display: "flex",
@@ -32,28 +35,50 @@ const useStyles = makeStyles((theme) => ({
 
 const Auth = () => {
   const [mode, setMode] = useState("login");
+  const [message, setMessage] = useState(null);
+  const [severity, setSeverity] = useState("info");
   const API_URL = "http://localhost:3001/auth";
 
   return (
     <>
       {mode === "login" ? (
         <>
-          <Login API_URL={API_URL} setMode={setMode} />
+          <Login
+            API_URL={API_URL}
+            setMode={setMode}
+            message={message}
+            setMessage={setMessage}
+            severity={severity}
+            setSeverity={setSeverity}
+          />
         </>
       ) : (
         <>
-          <Register API_URL={API_URL} setMode={setMode} />
+          <Register
+            API_URL={API_URL}
+            setMode={setMode}
+            message={message}
+            setMessage={setMessage}
+            severity={severity}
+            setSeverity={setSeverity}
+          />
         </>
       )}
     </>
   );
 };
 
-const Login = ({ API_URL, setMode }) => {
+const Login = ({
+  API_URL,
+  setMode,
+  message,
+  setMessage,
+  severity,
+  setSeverity,
+}) => {
   const [, setCookies] = useCookies(["access_token"]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
 
   const navigate = useNavigate();
 
@@ -65,16 +90,19 @@ const Login = ({ API_URL, setMode }) => {
         username,
         password,
       });
-      if (result.status !== 200) {
-        setMessage("Login Failed!");
-      } else {
+      if (result.status === 200) {
         setCookies("access_token", result.data.token);
         localStorage.setItem("userID", result.data.userID);
-        navigate("/");
+        setMessage("Login Completed");
+        setSeverity("Success");
+        setTimeout(() => {
+          navigate("/");
+        }, 2000); // Delay navigation by 2 seconds (2000 milliseconds)
       }
     } catch (error) {
       console.error(error);
       setMessage(error.response.data.message);
+      setSeverity("error");
     }
   };
 
@@ -87,17 +115,23 @@ const Login = ({ API_URL, setMode }) => {
       handleSubmit={handleSubmit}
       label="Login"
       message={message}
+      severity={severity}
       toggleLabel="Register"
       onToggleClick={() => setMode("register")}
     />
   );
 };
 
-const Register = ({ API_URL, setMode }) => {
+const Register = ({
+  API_URL,
+  setMode,
+  message,
+  setMessage,
+  severity,
+  setSeverity,
+}) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
-  // const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -105,9 +139,11 @@ const Register = ({ API_URL, setMode }) => {
     try {
       await axios.post(`${API_URL}/register`, { username, password });
       setMessage("Registration Completed");
+      setSeverity("success");
     } catch (error) {
       console.error(error);
       setMessage(error.response.data.message);
+      setSeverity("error");
     }
   };
 
@@ -120,6 +156,7 @@ const Register = ({ API_URL, setMode }) => {
       handleSubmit={handleSubmit}
       label="Register"
       message={message}
+      severity={severity}
       toggleLabel="Login"
       onToggleClick={() => setMode("login")}
     />
@@ -134,6 +171,7 @@ const Form = ({
   handleSubmit,
   label,
   message,
+  severity,
   toggleLabel,
   onToggleClick,
 }) => {
@@ -166,10 +204,9 @@ const Form = ({
             />
           </div>
           {message && (
-            <Typography color="error" gutterBottom>
-              {message}
-            </Typography>
+            <MessageComponent message={message} severity={severity} />
           )}
+
           <Button type="submit" variant="contained" color="primary">
             {label}
           </Button>
