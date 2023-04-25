@@ -94,7 +94,7 @@ const Login = ({
         setCookies("access_token", result.data.token);
         localStorage.setItem("userID", result.data.userID);
         setMessage("Login Completed");
-        setSeverity("Success");
+        setSeverity("success");
         setTimeout(() => {
           navigate("/");
         }, 2000); // Delay navigation by 2 seconds (2000 milliseconds)
