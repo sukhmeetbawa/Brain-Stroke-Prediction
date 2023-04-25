@@ -53,6 +53,8 @@ const Login = ({ API_URL, setMode }) => {
   const [, setCookies] = useCookies(["access_token"]);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -63,11 +65,16 @@ const Login = ({ API_URL, setMode }) => {
         username,
         password,
       });
-      setCookies("access_token", result.data.token);
-      localStorage.setItem("userID", result.data.userID);
-      navigate("/");
+      if (result.status !== 200) {
+        setMessage("Login Failed!");
+      } else {
+        setCookies("access_token", result.data.token);
+        localStorage.setItem("userID", result.data.userID);
+        navigate("/");
+      }
     } catch (error) {
       console.error(error);
+      setMessage(error.response.data.message);
     }
   };
 
@@ -79,6 +86,7 @@ const Login = ({ API_URL, setMode }) => {
       setPassword={setPassword}
       handleSubmit={handleSubmit}
       label="Login"
+      message={message}
       toggleLabel="Register"
       onToggleClick={() => setMode("register")}
     />
@@ -96,9 +104,10 @@ const Register = ({ API_URL, setMode }) => {
 
     try {
       await axios.post(`${API_URL}/register`, { username, password });
-      setMessage("Registration Completed! Now login.");
+      setMessage("Registration Completed");
     } catch (error) {
       console.error(error);
+      setMessage(error.response.data.message);
     }
   };
 

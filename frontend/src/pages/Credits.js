@@ -20,6 +20,10 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     marginRight: theme.spacing(1),
   },
+  link: {
+    color: "inherit",
+    textDecoration: "none",
+  },
 }));
 
 function Credits() {
@@ -30,26 +34,54 @@ function Credits() {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <Typography className={classes.credit}>
-            <GitHubIcon className={classes.icon} />
-            <span>Sukhmeet Singh Bawa - 20070122146</span>
+            <a
+              href="https://github.com/sukhmeetbawa"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.link}
+            >
+              <GitHubIcon className={classes.icon} />
+              <span>Sukhmeet Bawa - 20070122146</span>
+            </a>
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography className={classes.credit}>
-            <GitHubIcon className={classes.icon} />
-            <span>Sudhanshu Thakur - 20070122143</span>
+            <a
+              href="https://github.com/Sudy37z"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.link}
+            >
+              <GitHubIcon className={classes.icon} />
+              <span>Sudhanshu Thakur - 20070122143</span>
+            </a>
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography className={classes.credit}>
-            <GitHubIcon className={classes.icon} />
-            <span>Sneh Patel - 20070122134</span>
+            <a
+              href="https://github.com/Patel-Sneh"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.link}
+            >
+              <GitHubIcon className={classes.icon} />
+              <span>Sneh Patel - 20070122134</span>
+            </a>
           </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Typography className={classes.credit}>
-            <GitHubIcon className={classes.icon} />
-            <span>Swapnil Biswas - 20070122148</span>
+            <a
+              href="https://github.com/swapnil-23"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={classes.link}
+            >
+              <GitHubIcon className={classes.icon} />
+              <span>Swapnil Biswas - 20070122148</span>
+            </a>
           </Typography>
         </Grid>
       </Grid>

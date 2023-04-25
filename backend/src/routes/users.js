@@ -19,7 +19,7 @@ router.post("/register", async (req, res) => {
 
   const newUser = new UserModel({ username, password: hashedPassword });
   await newUser.save();
-  res.json({ message: "User Registered Successfully!" });
+  res.json({ message: "User Registered Successfully" });
 });
 
 router.post("/login", async (req, res) => {
@@ -28,11 +28,11 @@ router.post("/login", async (req, res) => {
     username: username,
   });
   if (!user) {
-    return res.status(401).json({ message: "User not found!" });
+    return res.status(401).json({ message: "User not found" });
   }
   const isPasswordValid = await bcrypt.compare(password, user.password);
   if (!isPasswordValid) {
-    return res.status(401).json({ message: "Invalid Username or Password!" });
+    return res.status(401).json({ message: "Invalid Username or Password" });
   }
 
   const token = jwt.sign({ id: user._id }, "secret");
