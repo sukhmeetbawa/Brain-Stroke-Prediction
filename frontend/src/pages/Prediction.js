@@ -1,5 +1,6 @@
 // Importing modules
 import React, { useState } from "react";
+import { Cookies } from "react-cookie";
 import Axios from "axios";
 import {
   FormControl,
@@ -12,7 +13,20 @@ import {
   Input,
   Box,
   Grid,
+  makeStyles,
 } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "100vh",
+  },
+  message: {
+    textAlign: "center",
+  },
+}));
 
 function Prediction() {
   //Using useState to set incoming variable from Python backend
@@ -27,6 +41,21 @@ function Prediction() {
   const [work, setWorkStatus] = useState("");
   const [residence, setResidenceStatus] = useState("");
   const [smoking, setSmokingStatus] = useState("");
+
+  const classes = useStyles();
+
+  const cookies = new Cookies();
+  const cookie = cookies.get("access_token");
+
+  if (!cookie) {
+    return (
+      <Container className={classes.container}>
+        <div className={classes.message}>
+          <Typography variant="h2">Login First!</Typography>
+        </div>
+      </Container>
+    );
+  }
 
   const sendUserInfo = (event) => {
     event.preventDefault();
