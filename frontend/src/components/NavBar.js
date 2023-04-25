@@ -20,13 +20,20 @@ const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
   },
+  root: {
+    backgroundColor: theme.palette.secondary.main, // Set your desired background color
+    borderRadius: theme.spacing(1), // Add border radius to achieve rounded corners
+  },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 export const NavBar = () => {
   const [cookies, setCookies] = useCookies(["access_token"]);
   const navigate = useNavigate();
   const classes = useStyles();
-  const theme = useTheme();
+  const theme = useTheme(); // Access theme object
 
   // State to manage drawer state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -58,7 +65,7 @@ export const NavBar = () => {
   ];
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" className={classes.root}>
       <Toolbar>
         {/* The menu button is only visible in small screens */}
         {isSmallScreen && (

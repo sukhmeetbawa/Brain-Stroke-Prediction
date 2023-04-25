@@ -15,10 +15,7 @@ const useStyles = makeStyles((theme) => ({
   sectionHeader: {
     marginTop: theme.spacing(4),
     marginBottom: theme.spacing(2),
-  },
-  causeImage: {
-    maxWidth: "100%",
-    height: "auto",
+    fontWeight: "bold",
   },
 }));
 
@@ -26,14 +23,16 @@ const About = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.aboutPage}>
+    <div className={classes.aboutPage} style={{ textAlign: "center" }}>
       <Container maxWidth="md">
         <Box className={classes.aboutContainer}>
-          <Typography variant="h4" align="center">
-            ABOUT BRAIN STROKES
+          <Typography
+            variant="h2"
+            align="center"
+            style={{ fontWeight: "bold" }}
+          >
+            About Brain Strokes
           </Typography>
-
-          <Divider />
 
           <Typography variant="body1">
             A stroke is a medical emergency that occurs when the blood supply to
@@ -61,8 +60,10 @@ const About = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Box className={classes.aboutContainer}>
+                <Typography variant="h4" style={{ fontWeight: "bold" }}>
+                  BMI
+                </Typography>
                 <DonutChart series={[15.3, 84.7]} labels={["Fit", "Obese"]} />
-                <Typography variant="h5">BMI</Typography>
                 <Typography variant="body1">
                   Obesity increases risk for stroke by several distinct
                   mechanisms including diabetes mellitus, hypertension,
@@ -75,11 +76,13 @@ const About = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Box className={classes.aboutContainer}>
+                <Typography variant="h4" style={{ fontWeight: "bold" }}>
+                  AGE
+                </Typography>
                 <DonutChart
                   series={[28.9, 71.1]}
                   labels={["Adult", "Elderly"]}
                 />
-                <Typography variant="h5">AGE</Typography>
                 <Typography variant="body1">
                   The older you are, the more likely you are to have a stroke.
                   The chance of having a stroke about doubles every 10 years
@@ -90,11 +93,13 @@ const About = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Box className={classes.aboutContainer}>
+                <Typography variant="h4" style={{ fontWeight: "bold" }}>
+                  SMOKING
+                </Typography>
                 <DonutChart
                   series={[36.1, 63.9]}
                   labels={["Non Smoker", "Active Smoker"]}
                 />
-                <Typography variant="h5">SMOKING</Typography>
                 <Typography variant="body1">
                   Smoking is a major cause of cardiovascular disease (CVD) and
                   causes one of every four deaths from CVD. Secondhand smoke
@@ -105,11 +110,13 @@ const About = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <Box className={classes.aboutContainer}>
+                <Typography variant="h4" style={{ fontWeight: "bold" }}>
+                  DIABETES
+                </Typography>
                 <DonutChart
                   series={[40.2, 15.3, 44.6]}
                   labels={["Diabetic", "Pre Diabetic", "Non Diabetic"]}
                 />
-                <Typography variant="h5">DIABETES</Typography>
                 <Typography variant="body1">
                   Diabetes is a well-established risk factor for stroke. It can
                   cause pathologic changes in blood vessels at various locations

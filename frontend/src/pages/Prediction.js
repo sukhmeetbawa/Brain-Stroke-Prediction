@@ -51,7 +51,9 @@ function Prediction() {
     return (
       <Container className={classes.container}>
         <div className={classes.message}>
-          <Typography variant="h2">Login First!</Typography>
+          <Typography variant="h2" style={{ fontWeight: "bold" }}>
+            Login First!
+          </Typography>
         </div>
       </Container>
     );
@@ -104,7 +106,12 @@ function Prediction() {
   return (
     <Container maxWidth="xs">
       <Box>
-        <Typography component="h2" variant="h4" align="center">
+        <Typography
+          component="h2"
+          variant="h2"
+          align="center"
+          style={{ fontWeight: "bold", marginTop: "20px" }}
+        >
           Enter Details
         </Typography>
         <form>

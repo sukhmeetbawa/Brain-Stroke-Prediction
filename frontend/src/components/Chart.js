@@ -25,8 +25,8 @@ const DonutChart = ({ series, labels }) => {
       horizontalAlign: "center",
       floating: false,
       fontSize: "14px",
-      fontFamily: "Roboto, Arial, sans-serif",
-      fontWeight: 400,
+      // fontFamily: "Roboto, Arial, sans-serif",
+      fontWeight: 200,
     },
     tooltip: {
       enabled: true,
