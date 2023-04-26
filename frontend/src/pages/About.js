@@ -1,6 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Container, Grid, Typography, Box, Divider } from "@material-ui/core";
+import { Container, Grid, Typography, Box } from "@material-ui/core";
 import DonutChart from "../components/Chart";
 
 const useStyles = makeStyles((theme) => ({

@@ -86,6 +86,8 @@ const Login = ({
     event.preventDefault();
 
     try {
+      setMessage(null);
+      setSeverity("info");
       const result = await axios.post(`${API_URL}/login`, {
         username,
         password,
@@ -137,6 +139,8 @@ const Register = ({
     event.preventDefault();
 
     try {
+      setMessage(null);
+      setSeverity("info");
       await axios.post(`${API_URL}/register`, { username, password });
       setMessage("Registration Completed");
       setSeverity("success");
