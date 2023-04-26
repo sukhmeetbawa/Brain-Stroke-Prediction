@@ -5,9 +5,8 @@ import { DataModel } from "../models/Data.js";
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  console.log(req.body);
   const user = new DataModel({
-    userName: req.body.userName,
+    userID: req.body.userID,
     strokeStatus: req.body.strokeStatus,
   });
   console.log(user);

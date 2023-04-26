@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
 
 const DataSchema = new mongoose.Schema({
-  userName: {
-    type: String,
+  userID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users",
     required: true,
   },
   strokeStatus: {
     type: String,
+    required: true,
   },
 });
 

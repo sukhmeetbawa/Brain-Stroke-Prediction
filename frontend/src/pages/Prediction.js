@@ -47,7 +47,7 @@ function Prediction() {
 
   const cookies = new Cookies();
   const cookie = cookies.get("access_token");
-
+  const userID = localStorage.getItem("userID");
   const [message, setMessage] = useState(null);
   const [severity, setSeverity] = useState("info");
 
@@ -90,10 +90,8 @@ function Prediction() {
     fetch(`/ProcessUserinfo/${JSON.stringify(userInfo)}`, { method: "POST" })
       .then((res) => res.json())
       .then((parsedObj) => {
-        console.log(parsedObj);
-
         Axios.post(`http://localhost:3001/insert`, {
-          userName: name,
+          userID: userID,
           strokeStatus: parsedObj,
         });
 
