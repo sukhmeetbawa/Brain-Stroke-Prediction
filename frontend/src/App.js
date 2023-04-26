@@ -5,7 +5,6 @@ import { NavBar } from "./components/NavBar";
 import About from "./pages/About";
 import Credits from "./pages/Credits";
 import theme from "./Theme";
-import "./App.css";
 import { ThemeProvider } from "@material-ui/core";
 
 function App() {

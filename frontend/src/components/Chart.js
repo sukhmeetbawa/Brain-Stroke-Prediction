@@ -36,6 +36,7 @@ const DonutChart = ({ series, labels }) => {
         },
       },
     },
+    colors: ["#00c7c1", "#a460fe", "#ff30a6"], // Specify the colors for the chart slices
   };
 
   return (
