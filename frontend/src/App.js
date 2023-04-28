@@ -6,6 +6,7 @@ import About from "./pages/About";
 import Credits from "./pages/Credits";
 import theme from "./Theme";
 import { ThemeProvider } from "@material-ui/core";
+import Data from "./pages/Data";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
               <Route path="/auth" element={<Auth />}></Route>
               <Route path="/about" element={<About />}></Route>
               <Route path="/credits" element={<Credits />}></Route>
+              <Route path="/data" element={<Data />}></Route>
             </Routes>
           </div>
         </ThemeProvider>

@@ -5,9 +5,14 @@ const DataSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "users",
     required: true,
+    unique: false,
+  },
+  gender: {
+    type: String,
+    required: true,
   },
   strokeStatus: {
-    type: String,
+    type: Boolean,
     required: true,
   },
 });
