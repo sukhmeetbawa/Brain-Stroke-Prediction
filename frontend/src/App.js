@@ -1,12 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@material-ui/core";
+import { NavBar } from "./components/NavBar";
 import Prediction from "./pages/Prediction";
 import Auth from "./pages/Auth";
-import { NavBar } from "./components/NavBar";
 import About from "./pages/About";
 import Credits from "./pages/Credits";
-import theme from "./Theme";
-import { ThemeProvider } from "@material-ui/core";
 import Data from "./pages/Data";
+import theme from "./Theme";
 
 function App() {
   return (
@@ -15,7 +15,6 @@ function App() {
         <ThemeProvider theme={theme}>
           <NavBar />
           <div>
-            {/* <div style={{ marginTop: "20px" }}> */}
             <Routes>
               <Route path="/" element={<Prediction />}></Route>
               <Route path="/auth" element={<Auth />}></Route>

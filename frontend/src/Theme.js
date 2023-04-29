@@ -3,22 +3,21 @@ import { createTheme } from "@material-ui/core/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#60bafe", // Update this with your desired primary color
+      main: "#60bafe",
     },
     secondary: {
-      main: "#fea460", // Update this with your desired secondary color
+      main: "#fea460",
     },
     neutral: {
       main: "#64748B",
       contrastText: "#fff",
     },
-    // Define other custom colors here
   },
   shape: {
-    borderRadius: 8, // Set your desired border radius
+    borderRadius: 8,
   },
   typography: {
-    fontFamily: "Comfortaa", // Update this with your desired font family
+    fontFamily: "Comfortaa",
     textAlign: "center",
   },
 });
