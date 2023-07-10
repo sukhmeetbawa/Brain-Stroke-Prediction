@@ -1,7 +1,6 @@
 // Importing modules
 import React, { useState } from "react";
 import { Cookies } from "react-cookie";
-import Axios from "axios";
 import {
   FormControl,
   InputLabel,
@@ -17,6 +16,7 @@ import {
 } from "@material-ui/core";
 import MessageComponent from "../components/Message";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -83,16 +83,11 @@ function Prediction() {
       );
       console.log(userInfo);
 
-      //Initializing a request that can POST to the python backend
-      const request = new XMLHttpRequest();
-      request.open("POST", `/ProcessUserinfo/${JSON.stringify(userInfo)}`);
-      request.send();
 
-      //fetching using fetch function; i.e. GET request
-      fetch(`/ProcessUserinfo/${JSON.stringify(userInfo)}`, { method: "POST" })
-        .then((res) => res.json())
-        .then((parsedObj) => {
-          if (parsedObj === "No stroke") {
+      axios.post('/prediction', userInfo)
+        .then((response) => {
+          console.log(response.data); // Print the response data to the console
+          if (response.data === "No stroke") {
             setStrokeStatus(false);
             setMessage("Congratulations! Your chances of a stroke are low.");
             setSeverity("success");
@@ -101,17 +96,20 @@ function Prediction() {
             setMessage("Ohh No! Your chances of getting a stroke are high");
             setSeverity("error");
           }
-          Axios.post(`http://localhost:3001/data`, {
+          axios.post(`/data`, {
             userID: userID,
             gender: gender,
             age: age,
             strokeStatus: strokeStatus,
           });
+          setTimeout(() => {
+            navigate("/data");
+          }, 5000); // Delay navigation by 2 seconds (2000 milliseconds)
+        })
+        .catch((error) => {
+          console.error(error);
+          // Handle the error
         });
-
-      setTimeout(() => {
-        navigate("/data");
-      }, 5000); // Delay navigation by 2 seconds (2000 milliseconds)
     };
 
     return (

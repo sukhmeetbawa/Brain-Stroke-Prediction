@@ -37,7 +37,7 @@ const Auth = () => {
   const [mode, setMode] = useState("login");
   const [message, setMessage] = useState(null);
   const [severity, setSeverity] = useState("info");
-  const API_URL = "http://localhost:3001/auth";
+  const API_URL = "/auth";
 
   return (
     <>

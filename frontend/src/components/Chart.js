@@ -32,7 +32,7 @@ const DonutChart = ({ series, labels }) => {
       enabled: true,
       y: {
         formatter: function (val) {
-          return val + "%";
+          return val;
         },
       },
     },

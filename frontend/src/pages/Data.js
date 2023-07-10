@@ -14,7 +14,7 @@ const Data = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3001/data")
+      .get("/data")
       .then((res) => {
         setStrokeCount(res.data.strokeCount);
         setNoStrokeCount(res.data.noStrokeCount);
